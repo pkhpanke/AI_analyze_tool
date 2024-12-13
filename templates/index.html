@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSO VOC Tool</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>PSO VOC TOOL</h1>
+        </header>
+
+        <div class="input-group">
+            <form method="post" action="/submit">
+                <input type="text" name="linkInput" placeholder="Input product link from homedepot.com" class="link-input">
+                <button class="brand">None</button>
+                <button type="submit" class="start-scraping">Start Scraping</button>
+            </form>
+        </div>
+        <div class="product-info">
+            <div class="product-name">Product Name</div>
+            <div class="score">Score <span class="score-total">total</span></div>
+            <div class="ratings">ratings(%)</div>
+            <div class="buyer">buyer(%)</div>
+            <div class="recommend">recommend(%)</div>
+            <div class="age">age(%)</div>
+        </div>
+        <div class="tabs">
+            <button class="tab-button">AI analysis</button>
+            <button class="tab-button active">Reviews</button>
+        </div>
+        <div class="reviews">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Star</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Review rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+        <footer class="footer">
+            <button class="download-reviews">Download reviews</button>
+            <span class="version">version: Beta 0.5.2</span>
+            <span class="contact">Need Assistance? Email victor_hu@homedepot.com</span>
+        </footer>
+    </div>
+</body>
+</html>

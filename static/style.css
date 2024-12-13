@@ -1,0 +1,138 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-group {
+   
+    justify-content: space-between; /* 子元素之间的空间均匀分布 */
+    align-items: center;   /* 垂直居中对齐 */
+    width: 100%;           /* 容器宽度为100% */
+}
+
+.link-input, .brand, .start-scraping {            
+    padding: 10px 20px;    /* 内边距 */
+    border: none;
+    cursor: pointer;       /* 鼠标悬停时显示指针 */
+}
+
+.link-input {
+    margin-left: 3%;   
+    width: 60%;
+    background-color: #5f5f5f;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px; 
+}
+
+.brand {
+    border-radius: 0; 
+    margin: 5px;
+    width: 10%;
+    background-color: #5f5f5f;
+}
+
+.start-scraping {
+    width: 15%;
+    margin-right: 3%;
+    background-color: #ff5722;
+    color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.start-scraping {
+    width : 15%;
+    margin-right: 3%;
+    background-color: #ff5722;
+    color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius:5px 
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.product-name, .score, .ratings, .buyer, .recommend, .age {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #ff5722;
+}
+
+.reviews {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #555;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+}
+
+.download-reviews {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.version, .contact {
+    margin: 0;
+}
