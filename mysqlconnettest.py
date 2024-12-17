@@ -11,6 +11,7 @@ from mysql.connector import errorcode
 config = {
     'host': 'aianalysis.mysql.database.azure.com',     # 数据库服务器地址
     'user': '<ZDHH25U>',         # 数据库用户名
+    'port':'3306',
     'password': '<Pp2766466225.>',         # 数据库密码
     'database': '<pso_voc_tool>'   # 数据库名
 }

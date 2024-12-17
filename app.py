@@ -252,7 +252,14 @@ def generate_session_id(key):
 
 if __name__ == '__main__':
     print("尝试连接数据库")
-    DatabaseHandler.initialize_pool(host="localhost", database="pso_voc_tool", user="root", password="")
+#     config = {
+#     'host': 'aianalysis.mysql.database.azure.com',     # 数据库服务器地址
+#     'user': '<ZDHH25U>',         # 数据库用户名
+#     'port':'3306',
+#     'password': '<Pp2766466225.>',         # 数据库密码
+#     'database': '<pso_voc_tool>'   # 数据库名
+# }
+    DatabaseHandler.initialize_pool(host="aianalysis.mysql.database.azure.com", database="pso_voc_tool", user="ZDHH25U", password="Pp2766466225.")
     print("连接失败")
     # app.run(ssl_context=('/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place_bundle.crt', '/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place.key'),debug=True,host='0.0.0.0',port=443)
     app.run(debug=True)

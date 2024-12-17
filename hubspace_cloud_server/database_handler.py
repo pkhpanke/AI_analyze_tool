@@ -215,7 +215,7 @@ class DatabaseHandler:
 
 # Example usage
 if __name__ == '__main__':
-    DatabaseHandler.initialize_pool(host="localhost", database="pso_voc_tool", user="root", password="")
+    DatabaseHandler.initialize_pool(host="aianalysis.mysql.database.azure.com", database="pso_voc_tool", user="ZDHH25U", password="Pp2766466225.")
     db = DatabaseHandler()
     db.connect()
 
