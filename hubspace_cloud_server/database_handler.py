@@ -215,7 +215,7 @@ class DatabaseHandler:
 
 # Example usage
 if __name__ == '__main__':
-    DatabaseHandler.initialize_pool(host="aianalysis.mysql.database.azure.com", database="pso_voc_tool", user="ZDHH25U", password="Pp2766466225.")
+    DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
     db = DatabaseHandler()
     db.connect()
 
