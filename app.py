@@ -1,10 +1,10 @@
 from flask import Flask, redirect, request, render_template_string, session, url_for,jsonify
 from scraper import urltest
 import os
-import hubspace_cloud_server.claude_web
-from hubspace_cloud_server.reviews_analysis import ChatGPTReviewAnalyzer 
-from hubspace_cloud_server.database_handler import DatabaseHandler
-from hubspace_cloud_server.reviews_analyze_model import ReviewsAnalyzeModel
+import claude_web
+from reviews_analysis import ChatGPTReviewAnalyzer 
+from database_handler import DatabaseHandler
+from reviews_analyze_model import ReviewsAnalyzeModel
 import hashlib
 import time
 import base64
@@ -259,8 +259,8 @@ if __name__ == '__main__':
 #     'password': '<Pp2766466225.>',         # 数据库密码
 #     'database': '<pso_voc_tool>'   # 数据库名
 # }
-    DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="avnadmin", user="ZDHH25U", password="AVNS_cnTwp6q_no-QkuZoNmW")
-    print("连接")
+    DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
+    print("连接成功")
     # app.run(ssl_context=('/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place_bundle.crt', '/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place.key'),debug=True,host='0.0.0.0',port=443)
     app.run(debug=True)
 #     config = {
