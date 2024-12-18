@@ -84,6 +84,7 @@ def submit():
 
 @app.route('/login', methods=['POST'])
 def login():
+    # DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
     db = DatabaseHandler()
     db.connect()
     logging.info("Inite a database connection")
@@ -253,7 +254,7 @@ def generate_session_id(key):
     return encoded.decode('utf-8')
 
 if __name__ == '__main__':
-    print("尝试连接数据库")
+    # print("尝试连接数据库")
 #     config = {
 #     'host': 'aianalysis.mysql.database.azure.com',     # 数据库服务器地址
 #     'user': '<ZDHH25U>',         # 数据库用户名
@@ -261,8 +262,8 @@ if __name__ == '__main__':
 #     'password': '<Pp2766466225.>',         # 数据库密码
 #     'database': '<pso_voc_tool>'   # 数据库名
 # }
-    DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
-    print("连接成功")
+    # DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
+    # print("连接成功")
     # app.run(ssl_context=('/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place_bundle.crt', '/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place.key'),debug=True,host='0.0.0.0',port=443)
     app.run(debug=True)
 #     config = {
