@@ -16,6 +16,9 @@ logging.basicConfig(level=logging.INFO,
 
 app = Flask(__name__)
 app.secret_key = "asdasdasdasd"
+UPLOAD_FOLDER = 'THD_VOC_Bot_Temp'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # 渲染 index.html 页面的路由
 @app.route('/', methods=['GET'])
 @app.route('/', methods=['GET'])
@@ -79,13 +82,14 @@ def submit():
 #     # 这里应该是调用PSOCloudClient的get_analysis_result方法
 #     return jsonify({'status': 'result received', 'session': session})
 
-app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
     db = DatabaseHandler()
     db.connect()
     logging.info("Inite a database connection")
     key = request.form.get('key')
     user_details = db.is_user_access_valid(key)
+    print(user_details)
     if user_details:
         logging.info(f"User ID: {user_details[0]}, User Name: {user_details[1]}")
         session_id = generate_session_id(key)
@@ -125,30 +129,28 @@ def analyze_file():
 
 
         file = request.files['file']
-
+        
         if file.filename == '':
             return jsonify({"error": "No selected file", "analysis_success": False}), 400
-
-        
+        filename_prefix = file.filename[:6]
         # Ensure the folder exists, create it if necessary
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
         # Save the file to the specified folder with its original filename
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(file_path)
 
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename_prefix)
+        file.save(file_path)
         # Print the file path where the uploaded file is saved
         logging.info(f'File saved at:, {file_path}')
 
         db = DatabaseHandler()
         db.connect()
         logging.info("Inite a database connection")
-        ret = db.check_sessionid(session_id)
+        # ret = db.check_sessionid(session_id)
         db.close()
         logging.info("close a database connection")
         db = None
-        if ret is False:
-            return jsonify({"error": "wrong session", "analysis_success": False}), 500
+        # if ret is False:
+        #     return jsonify({"error": "wrong session", "analysis_success": False}), 500
         analyzer = ReviewsAnalyzeModel(host)
         result = analyzer.analyze_reviews_from_file(file_path,type =type, product_name = product_name)
         logging.info(result)

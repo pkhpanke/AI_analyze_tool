@@ -5,6 +5,11 @@ import sys
 from reviews_analysis import ChatGPTReviewAnalyzer 
 from GPT_reviews_analyzer import GPTReviewsAnalyzer
 from database_handler import DatabaseHandler
+import logging
+# Configure logging
+logging.basicConfig(level=logging.INFO,
+                    format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 class ReviewsAnalyzeModel:
     def __init__(self,host) -> None:
@@ -206,4 +211,4 @@ class ReviewsAnalyzeModel:
         return reviews
 
 if __name__ == '__main__':
-    DatabaseHandler.initialize_pool(host="localhost", database="pso_voc_tool", user="root", password="")
+    DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
