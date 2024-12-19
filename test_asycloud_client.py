@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
 # http://127.0.0.1:5000
 class PSOCloudClient:
-    def __init__(self, host='http://127.0.0.1:5000', proxy=None):
+    def __init__(self, host='https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net', proxy=None):
         self.host = host
         self.proxy = proxy
 
@@ -90,7 +90,7 @@ async def main():
 
     # Assuming you have a valid session_id from the login process
     session_id =response['session_id']
-    response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips 60-Watt Equivalent A19 LED Smart Wi-Fi Color Changing Smart Light Bulb powered by WiZ with Bluetooth (1-Pack) 562702 - The Home Depot', 'Hampton Bay Lakeshore 13 in. Brushed Nickel Color Changing and Adjustable CCT Integrated LED Smart Flush Mount Powered by Hubspace SMACADER-MAGD01 - The Home Depot.csv')
+    response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips', 'THD_VOC_Bot_Temp\White Cordless Room Darkening Vinyl Mini Blinds with 1 in. Slats-23 in. W x 72 in. L (Actual Size 22.5 in. W x 72 in. L) 10793478354023 - The Home Depot_r12.txt')
     logging.info(response)
 
     # response = await client.get_analysis_result(session_id)
