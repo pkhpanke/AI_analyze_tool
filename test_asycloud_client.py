@@ -8,7 +8,7 @@ import winreg
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+# https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
 class PSOCloudClient:
     def __init__(self, host='http://127.0.0.1:5000', proxy=None):
         self.host = host
@@ -19,7 +19,17 @@ class PSOCloudClient:
         data = {'key': 'sk-Q6qyMsryBQ5LDrIvFV3DgIJ6a718LI8NGM5iUKyXanLy0mCV'}
         async with aiohttp.ClientSession() as session:
             async with session.post(url, data=data, timeout=10) as response:
-                return await response.json()
+                # 打印响应状态码
+                print(f"Status: {response.status}")
+                # 打印响应内容
+                response_text = await response.text()
+                print(f"Response: {response_text}")
+                # 如果您希望返回 JSON 数据，确保服务器返回的是 JSON 格式的响应
+                try:
+                    return await response.json()
+                except aiohttp.ContentTypeError:
+                    # 如果响应不是 JSON 格式，返回响应文本
+                    return response_text
 
     # async def analyze_reviews_file(self, session, key, type, host, product_name, file_path):
     #     url = f"{self.host}/analyze_file"
