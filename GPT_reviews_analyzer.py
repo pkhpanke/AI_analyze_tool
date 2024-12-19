@@ -535,7 +535,7 @@ class GPTReviewsAnalyzer():
 
 if __name__ == '__main__':
     # batch_size = 69
-    analyzer = GPTReviewsAnalyzer(key="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", host= "remote3")
+    analyzer = GPTReviewsAnalyzer(key="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", host= "remote3")
     # batches = analyzer.split_reviews_file('C:/Users/d87wvh/THD_VOC_Bot/Hampton Bay Fanelee 54 in. White Color Changing LED Brushed Nickel Smart Ceiling Fan with Light Kit and Remote Powered by Hubspace 52133 - The Home Depot.txt', batch_size)
     # for i, batch in enumerate(batches, 1):
     #     print(f"Batch {i}:\n{batch}\n")

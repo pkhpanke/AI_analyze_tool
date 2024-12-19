@@ -11,11 +11,11 @@ logging.basicConfig(level=logging.INFO,
 models_list = [
     # ["gpt-3.5-turbo", 3096], #4096, save 1000 tokens for result
     # ["gpt-3.5-turbo-16k", 15000], #16000, save 1000 tokens for result
-    ["gpt-4-1106-preview",126000],
+    ["gpt-4o",126000],
 ]
 
 class GPTInterface:
-    def __init__(self,key = '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',host= None):
+    def __init__(self,key = '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',host= None):
         
         openai.api_key = key
         # openai.proxy = 'http=127.0.0.1:9981'
@@ -27,7 +27,7 @@ class GPTInterface:
     def chat(self,model_name= None, system_prompt = None, user_prompt = None, assistant_prompt = None, temperature=1,max_output_tokens= 1024 ) -> str:
         try:
             if model_name is None:
-                model_name = "gpt-4-1106-preview"
+                model_name = "gpt-4o"
             messages = []
             messages.append({
                     "role": "system",
@@ -41,9 +41,7 @@ class GPTInterface:
             logging.info(messages)
             logging.info(temperature)
             logging.info(max_output_tokens)
-            print(model_name)
             logging.info("开始chat")
-            print("开始chat")
             response = openai.chat.completions.create(
                 model=model_name,
                 messages=messages,

@@ -108,7 +108,7 @@ class ReviewsAnalyzeModel:
                 chat_reply = self.gpt_agent("sk-Q6qyMsryBQ5LDrIvFV3DgIJ6a718LI8NGM5iUKyXanLy0mCV", file_path,type, product_name = product_name)
                 response = chat_reply
             elif self.host == 'remote3':
-                chat_reply = self.gpt_openai("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", file_path,type, product_name = product_name)
+                chat_reply = self.gpt_openai("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", file_path,type, product_name = product_name)
                 response = chat_reply
             else:
                 return {
@@ -213,3 +213,4 @@ class ReviewsAnalyzeModel:
 
 if __name__ == '__main__':
     DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
+
