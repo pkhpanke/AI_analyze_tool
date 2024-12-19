@@ -9,6 +9,7 @@ import winreg
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
+# http://127.0.0.1:5000
 class PSOCloudClient:
     def __init__(self, host='http://127.0.0.1:5000', proxy=None):
         self.host = host

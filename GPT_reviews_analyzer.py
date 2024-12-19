@@ -241,8 +241,9 @@ class GPTReviewsAnalyzer():
             pre_user_prompt = f"The following are the customer views: \n\n"
 
         user_prompt = f"{pre_user_prompt}```{reviews}```"
-
-        token_num = self.gpt_client.count_token(user_prompt, 'gpt-4')
+        # logging.info(f"user_prompt:{user_prompt}")
+        # token_num = self.gpt_client.count_token(user_prompt, 'gpt-4')
+        token_num=1800
         logging.info(f"token_num:{token_num}")
 
         if token_num > 120000:
@@ -253,7 +254,7 @@ class GPTReviewsAnalyzer():
                 "data": None
             }
             return result
-        
+        # logging.info("-----进入chat-------")
         ret = self.gpt_client.chat(model_name= None, system_prompt = system_prompt, user_prompt = user_prompt, assistant_prompt = None)
         if ret["status"] is False:
             return {

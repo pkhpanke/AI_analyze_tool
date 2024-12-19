@@ -15,7 +15,7 @@ models_list = [
 ]
 
 class GPTInterface:
-    def __init__(self,key = 'sk-Kbe0RxYjbnfiY8UU0rw0gqYmiOBA45EL8BtzRHSfy12hu3mD@15570',host= None):
+    def __init__(self,key = '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',host= None):
         
         openai.api_key = key
         # openai.proxy = 'http=127.0.0.1:9981'
@@ -36,6 +36,14 @@ class GPTInterface:
             messages.append({"role": "user",
                             "content": user_prompt}
                             )
+            
+            logging.info(model_name)
+            logging.info(messages)
+            logging.info(temperature)
+            logging.info(max_output_tokens)
+            print(model_name)
+            logging.info("开始chat")
+            print("开始chat")
             response = openai.chat.completions.create(
                 model=model_name,
                 messages=messages,
