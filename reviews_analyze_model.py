@@ -108,7 +108,7 @@ class ReviewsAnalyzeModel:
                 chat_reply = self.gpt_agent("sk-Q6qyMsryBQ5LDrIvFV3DgIJ6a718LI8NGM5iUKyXanLy0mCV", file_path,type, product_name = product_name)
                 response = chat_reply
             elif self.host == 'remote3':
-                chat_reply = self.gpt_openai(None, file_path,type, product_name = product_name)
+                chat_reply = self.gpt_openai("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", file_path,type, product_name = product_name)
                 response = chat_reply
             else:
                 return {
@@ -163,8 +163,8 @@ class ReviewsAnalyzeModel:
         return result
     
     def gpt_openai(self,key,file_path,type,product_name = None):
+        logging.info(f'传入的key:{key}')
         assistant = GPTReviewsAnalyzer(key, host='openai')
-        print(key)
         result = assistant.split_and_analyze_reviews_file(file_path,type = type,product_name = product_name)
         return result
 

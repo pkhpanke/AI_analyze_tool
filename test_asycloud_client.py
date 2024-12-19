@@ -10,7 +10,7 @@ import winreg
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
 class PSOCloudClient:
-    def __init__(self, host='https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net', proxy=None):
+    def __init__(self, host='http://127.0.0.1:5000', proxy=None):
         self.host = host
         self.proxy = proxy
 
@@ -18,7 +18,7 @@ class PSOCloudClient:
         url = f"{self.host}/login"
         data = {'key': 'sk-Q6qyMsryBQ5LDrIvFV3DgIJ6a718LI8NGM5iUKyXanLy0mCV'}
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, data=data, timeout=10) as response:
+            async with session.post(url, data=data, timeout=20) as response:
                 # 打印响应状态码
                 print(f"Status: {response.status}")
                 # 打印响应内容
@@ -68,7 +68,7 @@ class PSOCloudClient:
                 data.add_field('file', file, filename=filename, content_type='application/octet-stream')
 
                 async with aiohttp.ClientSession() as session:
-                    async with session.post(url, data=data, timeout=30) as response:
+                    async with session.post(url, data=data, timeout=60) as response:
                         return await response.json()
         else:
             return {"error": "File does not exist"}

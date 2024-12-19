@@ -16,6 +16,7 @@ models_list = [
 
 class GPTInterface:
     def __init__(self,key = 'sk-Kbe0RxYjbnfiY8UU0rw0gqYmiOBA45EL8BtzRHSfy12hu3mD@15570',host= None):
+        
         openai.api_key = key
         # openai.proxy = 'http=127.0.0.1:9981'
         if host == 'closeai':

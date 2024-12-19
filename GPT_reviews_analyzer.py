@@ -120,6 +120,7 @@ BATCHSIZE = 220
 
 class GPTReviewsAnalyzer():
     def __init__(self,key,host):
+        
         self.gpt_client = GPTInterface(key, host)
     
     def analyze_batch_reviews_from_file(self, filepath: str, type = None, prompt = None, product_name = None) -> str:
@@ -538,7 +539,7 @@ if __name__ == '__main__':
     # for i, batch in enumerate(batches, 1):
     #     print(f"Batch {i}:\n{batch}\n")
     logging.info("start split_and_analyze_reviews_file")
-    result = analyzer.split_and_analyze_reviews_file("/home/lighthouse/server/THD_VOC_Bot_Temp/Hampton Bay Fanelee 54 in. White Color Changing LED Brushed Nickel Smart Ceiling Fan with Light Kit and Remote Powered by Hubspace 52133 - The Home Depot.txt", product_name='Hampton Bay Fanelee 54 in. White Color Changing LED Brushed Nickel Smart Ceiling Fan with Light Kit and Remote Powered by Hubspace 52133')
+    result = analyzer.split_and_analyze_reviews_file('THD_VOC_Bot_Temp\Hampton Bay Lakeshore 13 in. Brushed Nickel Color Changing and Adjustable CCT Integrated LED Smart Flush Mount Powered by Hubspace SMACADER-MAGD01 - The Home Depot.csv')
     logging.info(f"result: {result}")
 
 
