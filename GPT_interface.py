@@ -1,4 +1,4 @@
-import openai
+from openai import OpenAI
 import requests
 from typing import Optional
 import logging
@@ -16,11 +16,11 @@ models_list = [
 
 class GPTInterface:
     def __init__(self,key = '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',host= None):
-        
-        openai.api_key = key
+        api_key=key
+        # Openai.api_key = key
         # openai.proxy = 'http=127.0.0.1:9981'
         if host == 'closeai':
-            openai.api_base = 'https://api.openai-proxy.org/v1'
+            api_base = 'https://api.openai-proxy.org/v1'
         else:
             pass
 
@@ -37,12 +37,10 @@ class GPTInterface:
                             "content": user_prompt}
                             )
             
-            logging.info(model_name)
-            logging.info(messages)
-            logging.info(temperature)
-            logging.info(max_output_tokens)
+            api_key = "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"  # 替换为您的实际 API 密钥
+            client = OpenAI(api_key=api_key)
             logging.info("开始chat")
-            response = openai.chat.completions.create(
+            response = client.chat.completions.create(
                 model=model_name,
                 messages=messages,
                 temperature = temperature,
@@ -85,10 +83,10 @@ class GPTInterface:
             # Handle network-related errors here
             logging.error(f"A network error occurred: {e}")
             return {"status":False, "message":e,"data":None}
-        except openai.OpenAIError as e:
-            # Handle OpenAI API errors here
-            logging.error(f"An OpenAI API error occurred: {e}")
-            return {"status":False, "message":e,"data":None}
+        # except openai.OpenAIError as e:
+        #     # Handle OpenAI API errors here
+        #     logging.error(f"An OpenAI API error occurred: {e}")
+        #     return {"status":False, "message":e,"data":None}
         except Exception as e:
             # Handle other possible errors
             logging.error(f"An error occurred: {e}")
