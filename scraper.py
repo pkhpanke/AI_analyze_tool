@@ -12,8 +12,6 @@ from flask import session
 import logging
 from thd_reviews import THDReviews
 reviews_list = []
-from amz_scrapper import AMZ_Scrapper
-from lowes_scrapper import LowesScraper
 def urltest(product_link):
        brand='None'
        if "homedepot" in product_link:
@@ -97,11 +95,13 @@ class ScraperThread(threading.Thread):
         if "homedepot.com" in self.link:
             scraper = THDReviews()
             scraper.fetch_reviews(self.link)  # Connect signals
-        elif "amazon.com" in self.link:
-            scraper = AMZ_Scrapper()
-        elif "lowes.com" in self.link:
-            scraper = LowesScraper()
-            scraper.fetch_reviews(self.link)  # Connect signals
+        # elif "amazon.com" in self.link:
+        #     scraper = AMZ_Scrapper()
+        # elif "lowes.com" in self.link:
+        #     scraper = LowesScraper()
+        #     scraper.fetch_reviews(self.link)  # Connect signals
+        else:
+            print("wrong")
         print("start scraping :" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         # ret_data = {
         #     "itemName": self.itemName,

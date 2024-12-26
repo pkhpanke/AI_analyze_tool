@@ -11,8 +11,6 @@ import base64
 import logging
 from thd_reviews import THDReviews
 import csv
-from amz_scrapper import AMZ_Scrapper
-from lowes_scrapper import LowesScraper
 from drawrating import generate_pie_chart
 # Configure logging
 logging.basicConfig(level=logging.INFO,
