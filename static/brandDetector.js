@@ -33,7 +33,7 @@ function updateProductInfo(data) {
     // 更新各星级评价
     // 创建一个img元素来显示图片
     const img = document.createElement('img');
-    img.src = '../rating_distribution.png'; // 设置图片的源路径
+    img.src = 'static/rating_distribution.png'; // 设置图片的源路径
     img.alt = 'Rating Distribution'; // 设置图片的替代文本
     img.style.width = '100%'; // 设置图片的宽度，可以根据需要调整
     ratings.appendChild(img); // 将图片元素添加到ratings容器中
