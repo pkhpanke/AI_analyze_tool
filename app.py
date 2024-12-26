@@ -1,5 +1,5 @@
-from flask import Flask, redirect, request, render_template_string, session, url_for,jsonify
-from scraper import urltest
+from flask import Flask, redirect, request, render_template_string, session, url_for,jsonify,send_file
+from scraper import urltest,ScraperThread
 import os
 import claude_web
 from reviews_analysis import ChatGPTReviewAnalyzer 
@@ -9,6 +9,10 @@ import hashlib
 import time
 import base64
 import logging
+from thd_reviews import THDReviews
+import csv
+from amz_scrapper import AMZ_Scrapper
+from lowes_scrapper import LowesScraper
 # Configure logging
 logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(message)s',
@@ -24,63 +28,80 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/', methods=['GET'])
 def index():
 
-    brand = session.get('brand', 'None')
-    
-    # 读取模板文件内容
     with open('templates/index.html', 'r') as file:
         template_content = file.read()
-    
-    # 替换按钮文本
-    rendered_template = template_content.replace('None', brand)
-    
-    return render_template_string(rendered_template)
+
+    return template_content
 
 # 处理表单提交的路由
 @app.route('/submit', methods=['POST'])
 def submit():
-    if request.method == 'POST':
-        product_link = request.form['linkInput']
-        print("Received product link:", product_link)
-        
-        # 检查 product_link 中是否包含 "THD"
-        session['brand']=urltest(product_link)
-        
-        # 重定向回首页
-        return redirect(url_for('index'))
+    product_link = request.form['linkInput']
+    brand = urltest(product_link)
 
-    return redirect(url_for('index'))
+    scraper=ScraperThread(product_link)
+    scraper.start()  # 启动线程
+    scraper.join()  # 等待线程完成
+    if scraper.scrap_success:
+        logging.info("Scraping successful.")
+        # 这里可以处理 scraper_thread 中的数据
+        print(f"Product Name: {scraper.productname}")
+        print(f"Reviews Count: {len(scraper.reviews)}")
+        for review in scraper.reviews:
+            print(f"Review: {review}")
+        if scraper.product_image_file_path:
+            print(f"Image saved at: {scraper.product_image_file_path}")
+        else:
+            print("No image content available.")
+    else:
+        logging.info("Scraping failed.")
+    # 评论已经抓取成功，需要反馈回页面
+    columns_to_read = ['\ufeffTitle', 'ReviewText', 'Rating', 'SubmissionTime']
 
-# @app.route('/login', methods=['POST'])
-# def login():
-#     key = request.form['key']
-#     # 这里应该是调用PSOCloudClient的login方法
-#     return jsonify({'status': 'logged in', 'key': key})
+# 初始化一个空字典来存储列的索引
+    column_indices = {column: None for column in columns_to_read}
 
-# @app.route('/analyze', methods=['POST'])
-# def analyze():
-#     session = request.form['session']
-#     key = request.form['key']
-#     type = request.form['type']
-#     host = request.form['host']
-#     product_name = request.form['productName']
-#     file = request.files['file']
-    
-#     # 这里应该是调用PSOCloudClient的analyze_reviews_file方法
-#     # 由于演示目的，我们不处理文件上传
-#     return jsonify({
-#         'status': 'analysis sent',
-#         'session': session,
-#         'key': key,
-#         'type': type,
-#         'host': host,
-#         'product_name': product_name
-#     })
+# 打开CSV文件
+    with open('data.csv', 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        column_names = reader.fieldnames
 
-# @app.route('/result', methods=['POST'])
-# def result():
-#     session = request.form['session']
-#     # 这里应该是调用PSOCloudClient的get_analysis_result方法
-#     return jsonify({'status': 'result received', 'session': session})
+
+        # 找到你想要读取的列的索引
+        for idx, column in enumerate(reader.fieldnames):
+            if column in columns_to_read:
+                column_indices[column] = idx
+
+
+        csv_data = []
+
+    # 检查是否所有列都找到了
+        if None in column_indices.values():
+            print("One or more columns not found in the CSV file.")
+        else:
+            logging.info("所有列都已找到。")
+
+        for row in reader:
+            selected_row = {}
+            for column in columns_to_read:
+                if column in row:
+                    if row[column] == None or row[column] == '':
+                        selected_row[column] = "None"
+                    else:
+                        selected_row[column] = row[column]
+                else:
+                    selected_row[column] = "Donthave"
+
+            csv_data.append(selected_row)
+        print(scraper.product_info)
+    return jsonify({'brand': brand, 'csvData': csv_data, 'productname': scraper.productname,'productinfo': scraper.product_info})
+
+@app.route('/download-csv')
+def download_csv():
+    logging.info("点击成功")
+    csv_file_path = 'data.csv'  # 确保这是你CSV文件的正确路径
+    return send_file(csv_file_path, as_attachment=True)
+
 
 @app.route('/login', methods=['POST'])
 def login():

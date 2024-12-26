@@ -203,12 +203,11 @@ class THDReviews():
                     product_name = parts[-2]
                     return product_name,None
                 doc = pq(response)
-                self.itemName = doc("title").text().replace("The Home Depot Logo AccountIcons", "").strip()  # 商品名称
+                itemName = doc("title").text().replace("The Home Depot Logo AccountIcons", "").strip()  # 商品名称
                 # soup = BeautifulSoup(response, 'html.parser')
                 # # Extract the title
                 # itemName = soup.find('title')
-                print("itemName: "+ self.itemName)
-                itemName=self.itemName
+                print("itemName: "+ itemName)
                 # Extract the image link from the link tag with id 'thd-helmet__link--preloadImg'
                 image_url = doc('link#thd-helmet__link--preloadImg').attr('href')
                 return itemName, image_url
@@ -402,7 +401,7 @@ class THDReviews():
                 review["ProductId"], review["itemName"]])
         if not new_data:
             return None
-        df = pd.DataFrame(new_data, columns=["Title", "ReviewText", "Rating", "SubmissionTime", "UserNickname", "ProductId", "itemName"])
+        df = pd.DataFrame(new_data, columns=["标题", "内容", "评分", "时间", "作者", "商品id", "商品名称"])
         df.to_csv(save_csv_path, index=False, encoding="utf_8_sig", mode="a", header=not os.path.exists(save_csv_path))
     # def fetch_product_img(self,img_link):
     #     if img_link:
@@ -501,18 +500,7 @@ class THDReviews():
             "reviews": new_data,
             "product_info": self.product_info_dict
         }
-        save_csv_path = "data.csv"
-        new_data = []
-        itemId = self.itemUrl.split("/")[-1]
-        for review in self.data:
-            new_data.append(
-                [review["Title"], review["ReviewText"], review["Rating"], review["SubmissionTime"], review["UserNickname"],
-                review["ProductId"], self.itemName])
-        if not new_data:
-            return None
-        df = pd.DataFrame(new_data, columns=["Title", "ReviewText", "Rating", "SubmissionTime", "UserNickname", "ProductId", "itemName"])
-        # df.to_csv(save_csv_path, index=False, encoding="utf_8_sig", mode="a", header=not os.path.exists(save_csv_path))
-        df.to_csv(save_csv_path, index=False, encoding="utf_8_sig", mode="w", header=True)
+
         return ret_data
 
 
@@ -535,4 +523,6 @@ if __name__ == '__main__':
 
     scraper = THDReviews()
     result=scraper.fetch_reviews("https://www.homedepot.com/p/LG-1-8-cu-ft-30-in-W-Smart-Over-the-Range-Microwave-Oven-with-EasyClean-in-PrintProof-Stainless-Steel-1000-Watt-MVEM1825F/321666159")
-    
+    print("--------------------------------------")
+    print(result)
+    print("--------------------------------------")

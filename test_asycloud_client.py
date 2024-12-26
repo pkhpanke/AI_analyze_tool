@@ -10,7 +10,7 @@ import winreg
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
 # http://127.0.0.1:5000
-class PSOCloudClient:
+class PSOCloudClientHTTP:
     def __init__(self, host='https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net', proxy=None):
         self.host = host
         self.proxy = proxy
@@ -82,7 +82,7 @@ class PSOCloudClient:
                 return await response.json()
 
 async def main():
-    client = PSOCloudClient()
+    client = PSOCloudClientHTTP()
     key = 'sk-Q6qyMsryBQ5LDrIvFV3DgIJ6a718LI8NGM5iUKyXanLy0mCV'
     response = await client.login(key)
     print("logging_info:")

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSO VOC Tool</title>
     <link rel="stylesheet" href="../static/style.css">
+    <script src="../static/brandDetector.js"></script>
 </head>
 <body>
     <div class="container">
@@ -15,37 +16,51 @@
         <div class="input-group">
             <form method="post" action="/submit">
                 <input type="text" name="linkInput" placeholder="Input product link from homedepot.com" class="link-input">
-                <button class="brand">None</button>
+                <button type="button"  class="brand">None</button>
                 <button type="submit" class="start-scraping">Start Scraping</button>
             </form>
         </div>
+
+
+
+
         <div class="product-info">
             <div class="product-name">Product Name</div>
-            <div class="score">Score <span class="score-total">total</span></div>
+            <div class="score_total">
+                <span class="score">Score</span>
+                
+                <span class="total">total</span>
+            
+            </div>
             <div class="ratings">ratings(%)</div>
             <div class="buyer">buyer(%)</div>
             <div class="recommend">recommend(%)</div>
             <div class="age">age(%)</div>
         </div>
+
+
+
+
         <div class="tabs">
             <button class="tab-button">AI analysis</button>
             <button class="tab-button active">Reviews</button>
         </div>
         <div class="reviews">
-            <table>
+            <table id="csvTable">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Star</th>
-                        <th>Title</th>
+                        <th>Rating</th>
                         <th>Content</th>
+                        <th>Date</th>
+                        <th>Title</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Review rows will be inserted here -->
+                    
                 </tbody>
             </table>
         </div>
+        <img src="../static/Loading_2.gif" id="loadingImage" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" alt="Loading">
         <footer class="footer">
             <button class="download-reviews">Download reviews</button>
             <span class="version">version: Beta 0.5.2</span>
