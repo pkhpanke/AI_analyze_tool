@@ -18,7 +18,6 @@ logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy()) 
 
 
 
