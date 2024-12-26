@@ -13,6 +13,7 @@ from thd_reviews import THDReviews
 import csv
 from amz_scrapper import AMZ_Scrapper
 from lowes_scrapper import LowesScraper
+from drawrating import generate_pie_chart
 # Configure logging
 logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(message)s',
@@ -93,6 +94,9 @@ def submit():
                     selected_row[column] = "Donthave"
 
             csv_data.append(selected_row)
+        print(scraper.product_info)
+        # 画图表
+        generate_pie_chart(scraper.product_info)
         print(scraper.product_info)
     return jsonify({'brand': brand, 'csvData': csv_data, 'productname': scraper.productname,'productinfo': scraper.product_info})
 

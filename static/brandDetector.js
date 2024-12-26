@@ -30,14 +30,13 @@ function updateProductInfo(data) {
     // 更新总评价数
     scoreTotal.querySelector('.total').textContent = productInfo.TotalResults;
 
-    // 更新各星级评价占比补图
-    const ratings = document.querySelector('.ratings');
-    ratings.innerHTML = ''; // 清空现有内容
-    Object.keys(productInfo.count_rating).forEach(rating => {
-        const ratingSpan = document.createElement('span');
-        ratingSpan.textContent = `${rating}: ${(productInfo.count_rating[rating])}`;
-        ratings.appendChild(ratingSpan);
-    });
+    // 更新各星级评价
+    // 创建一个img元素来显示图片
+    const img = document.createElement('img');
+    img.src = '../rating_distribution.png'; // 设置图片的源路径
+    img.alt = 'Rating Distribution'; // 设置图片的替代文本
+    img.style.width = '100%'; // 设置图片的宽度，可以根据需要调整
+    ratings.appendChild(img); // 将图片元素添加到ratings容器中
 
     // 更新购买者类型占比（如果有数据）
     const buyer = document.querySelector('.buyer');
