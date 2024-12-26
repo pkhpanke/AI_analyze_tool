@@ -5,7 +5,7 @@ import asyncio
 import json
 import pandas as pd
 from pyquery import PyQuery as pq
-import winreg
+
 import datetime
 # from PySide6.QtCore import QObject, Signal
 # from bs4 import BeautifulSoup
@@ -147,15 +147,6 @@ class THDReviews():
     def log_debug(self, message):
         logging.debug(message)
 
-    def get_proxy_settings_windows(self):
-        try:
-            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, 'Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings') as key:
-                proxy_enabled = winreg.QueryValueEx(key, 'ProxyEnable')[0]
-                if proxy_enabled:
-                    proxy_server = winreg.QueryValueEx(key, 'ProxyServer')[0]
-                    return proxy_server
-        except Exception as e:
-            pass
 
     async def do_request_detail(self,session:aiohttp.ClientSession, url, max_retries=3):
         """
