@@ -1,7 +1,7 @@
 from GPT_interface import GPTInterface
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import google.generativeai as genai
+# import google.generativeai as genai
 GEMINI_API_KEY = "AIzaSyAFN7Jn5lLXgeXPH0H7jc8CX63QGsMrzoE"
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -255,10 +255,11 @@ class GPTReviewsAnalyzer():
             }
             return result
         logging.info("-----进入chat-------")
-        model = genai.GenerativeModel('gemini-pro')
-        genai.configure(api_key=GEMINI_API_KEY)
-        prompt=system_prompt+user_prompt
-        ret = model.generate_content(prompt)
+        # model = genai.GenerativeModel('gemini-pro')
+        # genai.configure(api_key=GEMINI_API_KEY)
+        # prompt=system_prompt+user_prompt
+        # ret = model.generate_content(prompt)
+        ret="test"
         logging.info("-----ret示例-------")
         logging.info(ret)
         logging.info("-----ret示例结束-------")
