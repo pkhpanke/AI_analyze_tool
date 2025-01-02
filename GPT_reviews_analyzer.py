@@ -242,8 +242,8 @@ class GPTReviewsAnalyzer():
 
         user_prompt = f"{pre_user_prompt}```{reviews}```"
         # logging.info(f"user_prompt:{user_prompt}")
-        # token_num = self.gpt_client.count_token(user_prompt, 'gpt-4')
-        token_num=1800
+        token_num = self.gpt_client.count_token(user_prompt, 'gpt-4')
+        # token_num=1800
         logging.info(f"token_num:{token_num}")
 
         if token_num > 120000:

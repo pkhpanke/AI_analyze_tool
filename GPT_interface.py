@@ -15,7 +15,7 @@ models_list = [
 ]
 
 class GPTInterface:
-    def __init__(self,key = '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',host= None):
+    def __init__(self,key = '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',host= None):
         api_key=key
         # Openai.api_key = key
         # openai.proxy = 'http=127.0.0.1:9981'
@@ -37,7 +37,7 @@ class GPTInterface:
                             "content": user_prompt}
                             )
             
-            api_key = "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"  # 替换为您的实际 API 密钥
+            api_key = "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"  # 替换为您的实际 API 密钥
             logging.info(f"使用的api_key为{api_key}")
             client = OpenAI(api_key=api_key)
             logging.info("开始chat")
