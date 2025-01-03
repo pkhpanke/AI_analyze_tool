@@ -12,6 +12,8 @@ import logging
 from thd_reviews import THDReviews
 import csv
 from drawrating import generate_pie_chart
+import google.generativeai as genai
+GEMINI_API_KEY = "AIzaSyAFN7Jn5lLXgeXPH0H7jc8CX63QGsMrzoE"
 # Configure logging
 logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(message)s',
@@ -258,6 +260,22 @@ def get_analysis_result():
             db.close()
             logging.info("close a database connection")
 
+
+@app.route('/ai_analyze', methods=['POST'])
+def ai_analyze():
+    # 这里我们使用 subprocess 来运行 glai.py 脚本
+    # 请确保 glai.py 可以被直接执行，并且返回 JSON 格式的结果
+    try:
+        # 运行 glai.py 并获取结果
+        logging.info("-----进入chat-------")
+        print("进入chat")
+        model = genai.GenerativeModel('gemini-pro')
+        genai.configure(api_key=GEMINI_API_KEY)
+        ret = model.generate_content("做个自我介绍吧")
+        # 假设 glai.py 输出的是 JSON 格式的结果
+        return jsonify({'result': ret})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 def generate_session_id(key):
     # Get the current timestamp
     timestamp = str(time.time())
