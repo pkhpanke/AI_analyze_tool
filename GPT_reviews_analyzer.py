@@ -2,6 +2,8 @@ from GPT_interface import GPTInterface
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import google.generativeai as genai
+import vertexai
+from vertexai.language_models import TextGenerationModel
 GEMINI_API_KEY = "AIzaSyAFN7Jn5lLXgeXPH0H7jc8CX63QGsMrzoE"
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -256,21 +258,30 @@ class GPTReviewsAnalyzer():
             return result
         logging.info("-----进入chat-------")
         print("进入chat")
-        model = genai.GenerativeModel('gemini-1.5-pro')
-        genai.configure(api_key=GEMINI_API_KEY)
-        prompt=system_prompt+user_prompt
-        ret = model.generate_content(prompt)
+        vertexai.init(project="analytics-gbpd-thd", location="us-central1")
+        parameters = {
+            # "candidate_count": 1,
+            "max_output_tokens": 1024,
+            "temperature": 0.2,
+            "top_p": 0.8,
+            "top_k": 40
+        }
+        model = TextGenerationModel.from_pretrained("text-bison")
+        response = model.predict(user_prompt,**parameters
+)
+        print(f"Response from Model: {response.text}")
+        
         logging.info("-----ret示例-------")
-        logging.info(ret)
+        logging.info(response)
         logging.info("-----ret示例结束-------")
-        if ret["status"] is False:
+        if response["status"] is False:
             return {
                 "status": False,
-                "message": ret["message"],
+                "message": response["message"],
                 "data": None
             }
         
-        chat_reply = ret["data"]
+        chat_reply = response["data"]
 
         # Returning the assistant's analysis
         if chat_reply.choices[0].message.content:
