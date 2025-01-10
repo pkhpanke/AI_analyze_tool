@@ -256,7 +256,7 @@ class GPTReviewsAnalyzer():
             return result
         logging.info("-----进入chat-------")
         print("进入chat")
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-pro')
         genai.configure(api_key=GEMINI_API_KEY)
         prompt=system_prompt+user_prompt
         ret = model.generate_content(prompt)
