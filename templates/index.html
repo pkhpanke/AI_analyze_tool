@@ -6,6 +6,7 @@
     <title>PSO VOC Tool</title>
     <link rel="stylesheet" href="../static/style.css">
     <script src="../static/brandDetector.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -43,9 +44,19 @@
 
         <div class="tabs">
             <button class="tab-button" id="aiAnalyzeButton">AI analysis</button>
-            <button class="tab-button active">Reviews</button>
+            <button class="tab-button active" id="reviewsButton">Reviews</button>
         </div>
+
+
         <div class="reviews">
+            <div class="rating-filters">
+                <button class="rating-filter" data-rating="1">1 Star</button>
+                <button class="rating-filter" data-rating="2">2 Stars</button>
+                <button class="rating-filter" data-rating="3">3 Stars</button>
+                <button class="rating-filter" data-rating="4">4 Stars</button>
+                <button class="rating-filter" data-rating="5">5 Stars</button>
+                <button class="rating-filter" data-rating="all">ALL</button>
+            </div>
             <table id="csvTable">
                 <thead>
                     <tr>
@@ -60,14 +71,50 @@
                 </tbody>
             </table>
         </div>
-        <img src="../static/Loading_2.gif" id="loadingImage" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" alt="Loading">
+
+        <div class="AIanalyze hidden">
+
+
+            <div class="ai_button"> 
+                <input type="text" id="inputData" placeholder="Input your key" class="key_input">
+                <button id="submitButton" class="aisubmit">Star analyzing</button>
+            </div>
+            <div class="airesult">       
+                <div class="resultshow"> 
+                    <div class="resulttitle">Customer Persona</div>
+                    <div class="resultcontent"> </div>
+                </div>    
+                <div class="resultshow"> 
+                    <div class="resulttitle">Usage Scenarios</div>
+                    <canvas id="scenariosChart" width="400" height="200"></canvas>
+                    <div id="scenariosDetail"></div>
+                </div>   
+                <div class="resultshow"> 
+                    <div class="resulttitle">Positive Aspects(Pros)</div>
+                    <canvas id="prosChart" width="400" height="200"></canvas>
+                    <div id="prosDetail"></div>
+                </div>   
+                <div class="resultshow"> 
+                    <div class="resulttitle">Negative Aspects(Cons)</div>
+                    <canvas id="consChart" width="400" height="200"></canvas>
+                    <div id="consDetail"></div>
+                </div>   
+                <div class="resultshow"> 
+                    <div class="resulttitle">Suggestions for Improvement</div>
+                    <div class="resultcontent"> </div>
+                </div>        
+
+
+        </div>
+        
+    </div>
+    <div class="fixed-bottom">
         <footer class="footer">
             <button class="download-reviews">Download reviews</button>
             <span class="version">version: Beta 0.5.2</span>
             <span class="contact">Need Assistance? Email victor_hu@homedepot.com</span>
         </footer>
     </div>
-    <div >下面是airesult</div>
-    <div id="aiResult"></div>
+    <img src="../static/Loading_2.gif" id="loadingImage" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" alt="Loading">
 </body>
 </html>

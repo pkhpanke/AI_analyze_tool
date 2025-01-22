@@ -11,8 +11,11 @@ import base64
 import logging
 from thd_reviews import THDReviews
 import csv
-from drawrating import generate_pie_chart
+from drawrating import generate_chart,generate_charts
 import google.generativeai as genai
+import aiohttp
+import asyncio
+from test_asycloud_client import PSOCloudClientHTTP
 GEMINI_API_KEY = "AIzaSyAFN7Jn5lLXgeXPH0H7jc8CX63QGsMrzoE"
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -96,7 +99,8 @@ def submit():
             csv_data.append(selected_row)
         print(scraper.product_info)
         # 画图表
-        generate_pie_chart(scraper.product_info)
+        generate_chart(scraper.product_info)
+        generate_charts(scraper.product_info)
         print(scraper.product_info)
     return jsonify({'brand': brand, 'csvData': csv_data, 'productname': scraper.productname,'productinfo': scraper.product_info})
 
@@ -261,21 +265,7 @@ def get_analysis_result():
             logging.info("close a database connection")
 
 
-@app.route('/ai_analyze', methods=['POST'])
-def ai_analyze():
-    # 这里我们使用 subprocess 来运行 glai.py 脚本
-    # 请确保 glai.py 可以被直接执行，并且返回 JSON 格式的结果
-    try:
-        # 运行 glai.py 并获取结果
-        logging.info("-----进入chat-------")
-        print("进入chat")
-        model = genai.GenerativeModel('gemini-pro')
-        genai.configure(api_key=GEMINI_API_KEY)
-        ret = model.generate_content("做个自我介绍吧")
-        # 假设 glai.py 输出的是 JSON 格式的结果
-        return jsonify({'result': ret})
-    except Exception as e:
-        return jsonify({'error': str(e)})
+
 def generate_session_id(key):
     # Get the current timestamp
     timestamp = str(time.time())
@@ -294,23 +284,88 @@ def generate_session_id(key):
     # since base64 encoding of SHA-256 hash will be around 44 characters.
     return encoded.decode('utf-8')
 
+
+# 添加一个新的路由 /ai
+@app.route('/ai', methods=['POST'])
+def ai():
+    # 从请求中获取 key
+    key = request.form.get('key')
+    if not key:
+        return jsonify({"error": "Key is required"}), 400
+
+    # 定义一个异步函数用于执行 AI 分析
+    async def main():
+        client = PSOCloudClientHTTP()
+        response = await client.login(key)
+        logging.info("logging_info:")
+        logging.info(response)
+
+        # Assuming you have a valid session_id from the login process
+        session_id = response.get('session_id')
+        if not session_id:
+            return jsonify({"error": "Login failed"}), 401
+
+        file_path = 'data.csv'  # 服务器端的 data.csv 文件路径
+        response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips', file_path)
+        logging.info(response)
+
+        response = await client.get_analysis_result(session_id)
+        logging.info(response)
+
+        return jsonify({"message": "AI analysis started"}), 200
+
+    # 使用 asyncio.run 运行异步函数
+    return asyncio.run(main())
+
+
+# 用于测试页面的回报相应内容
+# @app.route('/ai', methods=['POST'])
+# def ai():
+    key = request.form.get('key')
+    if not key:
+        return jsonify({"error": "Key is required"}), 400
+
+    # 模拟的 response
+    response = {
+        "message": "AI analysis started",
+        "analysis_success": True,
+        "Customer Persona": {
+            "description": "The typical customer is a homeowner or DIY enthusiast who values smart lighting solutions for their home. They appreciate features such as adjustable color temperatures, ease of installation, and the ability to control lighting via smartphone apps. These customers tend to be tech-savvy and are looking for products that blend functionality with aesthetic appeal."
+        },
+        "Usage Scenarios": {
+            "Home interior lighting": 20,
+            "Dimming functionalities": 11,
+            "Smart home integration": 8,
+            "Easy installation": 7,
+            "Outdoor lighting": 1
+        },
+        "Positive Aspects (Pros)": {
+            "easy to install": 5,
+            "adjust lighting color": 4,
+            "smart controls (dimming, on/off, different colors)": 3,
+            "works well": 3,
+            "quality product": 2,
+            "quick install": 2,
+            "control each light individually or in a group": 1,
+            "dim the recessed LED permanently": 1,
+            "great illumination": 1,
+            "economical replacement": 1
+        },
+        "Negative Aspects (Cons)": {
+            "connectivity issues (Bluetooth, WiFi)": 4,
+            "poor quality (buzzing, flickering)": 2,
+            "lights go offline": 1,
+            "defective products": 1
+        },
+        "Suggestions for Improvement": {
+            "suggestion": "Improve the Wi-Fi connectivity reliability and Bluetooth performance. Address product quality issues related to dimming and flickering. Additionally, enhance the customer support experience for troubleshooting connection issues."
+        }
+    }
+
+    return jsonify(response), 200
+
 if __name__ == '__main__':
-    # print("尝试连接数据库")
-#     config = {
-#     'host': 'aianalysis.mysql.database.azure.com',     # 数据库服务器地址
-#     'user': '<ZDHH25U>',         # 数据库用户名
-#     'port':'3306',
-#     'password': '<Pp2766466225.>',         # 数据库密码
-#     'database': '<pso_voc_tool>'   # 数据库名
-# }
+
     DatabaseHandler.initialize_pool(host="aitoolsql-aitoolsql.g.aivencloud.com",port='21968', database="defaultdb", user="avnadmin", password="AVNS_cnTwp6q_no-QkuZoNmW")
     print("连接成功")
-    # app.run(ssl_context=('/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place_bundle.crt', '/home/lighthouse/server/ssl_key/hubspace.run.place_nginx/hubspace.run.place.key'),debug=True,host='0.0.0.0',port=443)
     app.run(debug=True)
-#     config = {
-#   'host':'aitoolsql-aitoolsql.g.aivencloud.com',
-#   'port': '21968',
-#   'user':'avnadmin',
-#   'password':'AVNS_cnTwp6q_no-QkuZoNmW',
-#   'database':'defaultdb'
-# }

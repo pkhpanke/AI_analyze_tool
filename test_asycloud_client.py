@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
 # http://127.0.0.1:5000
 class PSOCloudClientHTTP:
-    def __init__(self, host='https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net', proxy=None):
+    def __init__(self, host='http://127.0.0.1:5000', proxy=None):
         self.host = host
         self.proxy = proxy
 
@@ -93,8 +93,8 @@ async def main():
     response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips', 'THD_VOC_Bot_Temp\White Cordless Room Darkening Vinyl Mini Blinds with 1 in. Slats-23 in. W x 72 in. L (Actual Size 22.5 in. W x 72 in. L) 10793478354023 - The Home Depot_r12.txt')
     logging.info(response)
 
-    # response = await client.get_analysis_result(session_id)
-    # logging.info(response)
+    response = await client.get_analysis_result(session_id)
+    logging.info(response)
 
 if __name__ == '__main__':
     asyncio.run(main())

@@ -258,17 +258,53 @@ class GPTReviewsAnalyzer():
             return result
         logging.info("-----进入chat-------")
         print("进入chat")
-        vertexai.init(project="analytics-gbpd-thd", location="us-central1")
-        parameters = {
-            # "candidate_count": 1,
-            "max_output_tokens": 1024,
-            "temperature": 0.2,
-            "top_p": 0.8,
-            "top_k": 40
-        }
-        model = TextGenerationModel.from_pretrained("text-bison")
-        response = model.predict(user_prompt,**parameters
-)
+        # vertexai.init(project="analytics-gbpd-thd", location="us-central1")
+        # parameters = {
+        #     # "candidate_count": 1,
+        #     "max_output_tokens": 1024,
+        #     "temperature": 0.2,
+        #     "top_p": 0.8,
+        #     "top_k": 40
+        # }
+        # model = TextGenerationModel.from_pretrained("text-bison")
+        # response = model.predict(user_prompt,**parameters)
+        # 假设这是你的 Python 代码中的某个部分
+
+# 替换原来的 vertexai 和模型预测代码
+        response = {
+    "Customer Persona": {
+        "description": "The typical customer is a homeowner or DIY enthusiast who values smart lighting solutions for their home. They appreciate features such as adjustable color temperatures, ease of installation, and the ability to control lighting via smartphone apps. These customers tend to be tech-savvy and are looking for products that blend functionality with aesthetic appeal."
+    },
+    "Usage Scenarios": {
+        "Home interior lighting": 20,
+        "Dimming functionalities": 11,
+        "Smart home integration": 8,
+        "Easy installation": 7,
+        "Outdoor lighting": 1
+    },
+    "Positive Aspects (Pros)": {
+        "easy to install": 5,
+        "adjust lighting color": 4,
+        "smart controls (dimming, on/off, different colors)": 3,
+        "works well": 3,
+        "quality product": 2,
+        "quick install": 2,
+        "control each light individually or in a group": 1,
+        "dim the recessed LED permanently": 1,
+        "great illumination": 1,
+        "economical replacement": 1
+    },
+    "Negative Aspects (Cons)": {
+        "connectivity issues (Bluetooth, WiFi)": 4,
+        "poor quality (buzzing, flickering)": 2,
+        "lights go offline": 1,
+        "defective products": 1
+    },
+    "Suggestions for Improvement": {
+        "suggestion": "Improve the Wi-Fi connectivity reliability and Bluetooth performance. Address product quality issues related to dimming and flickering. Additionally, enhance the customer support experience for troubleshooting connection issues."
+    }
+}       
+        print(response)
         print(f"Response from Model: {response.text}")
         
         logging.info("-----ret示例-------")
