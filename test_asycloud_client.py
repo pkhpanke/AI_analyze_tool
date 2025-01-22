@@ -2,10 +2,7 @@ import aiohttp
 import asyncio
 import json
 import logging
-import base64
 import os
-import winreg
-
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # https://toll-cddpbre0ffgrc7hv.canadacentral-01.azurewebsites.net
