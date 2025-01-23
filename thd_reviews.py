@@ -200,6 +200,9 @@ class THDReviews():
                 itemName=self.itemName
                 # Extract the image link from the link tag with id 'thd-helmet__link--preloadImg'
                 image_url = doc('link#thd-helmet__link--preloadImg').attr('href')
+                print("------------------image_url--------------------------")
+                print(image_url)
+                print("------------------image_url--------------------------")
                 return itemName, image_url
         except Exception as e:
             logging.error(e)
@@ -490,6 +493,8 @@ class THDReviews():
             "reviews": new_data,
             "product_info": self.product_info_dict
         }
+        print("-----------------ret_data-------")
+        print(ret_data)
         save_csv_path = "data.csv"
         new_data = []
         itemId = self.itemUrl.split("/")[-1]

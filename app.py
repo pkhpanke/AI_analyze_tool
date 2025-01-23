@@ -286,41 +286,41 @@ def generate_session_id(key):
 
 
 # 添加一个新的路由 /ai
-@app.route('/ai', methods=['POST'])
-def ai():
-    # 从请求中获取 key
-    key = request.form.get('key')
-    if not key:
-        return jsonify({"error": "Key is required"}), 400
+# @app.route('/ai', methods=['POST'])
+# def ai():
+#     # 从请求中获取 key
+#     key = request.form.get('key')
+#     if not key:
+#         return jsonify({"error": "Key is required"}), 400
 
-    # 定义一个异步函数用于执行 AI 分析
-    async def main():
-        client = PSOCloudClientHTTP()
-        response = await client.login(key)
-        logging.info("logging_info:")
-        logging.info(response)
+#     # 定义一个异步函数用于执行 AI 分析
+#     async def main():
+#         client = PSOCloudClientHTTP()
+#         response = await client.login(key)
+#         logging.info("logging_info:")
+#         logging.info(response)
 
-        # Assuming you have a valid session_id from the login process
-        session_id = response.get('session_id')
-        if not session_id:
-            return jsonify({"error": "Login failed"}), 401
+#         # Assuming you have a valid session_id from the login process
+#         session_id = response.get('session_id')
+#         if not session_id:
+#             return jsonify({"error": "Login failed"}), 401
 
-        file_path = 'data.csv'  # 服务器端的 data.csv 文件路径
-        response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips', file_path)
-        logging.info(response)
+#         file_path = 'data.csv'  # 服务器端的 data.csv 文件路径
+#         response = await client.analyze_reviews_file(session_id, key, 'overall', 'remote3', 'Philips', file_path)
+#         logging.info(response)
 
-        response = await client.get_analysis_result(session_id)
-        logging.info(response)
+#         response = await client.get_analysis_result(session_id)
+#         logging.info(response)
 
-        return jsonify({"message": "AI analysis started"}), 200
+#         return jsonify({"message": "AI analysis started"}), 200
 
-    # 使用 asyncio.run 运行异步函数
-    return asyncio.run(main())
+#     # 使用 asyncio.run 运行异步函数
+#     return asyncio.run(main())
 
 
 # 用于测试页面的回报相应内容
-# @app.route('/ai', methods=['POST'])
-# def ai():
+@app.route('/ai', methods=['POST'])
+def ai():
     key = request.form.get('key')
     if not key:
         return jsonify({"error": "Key is required"}), 400

@@ -4,6 +4,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import google.generativeai as genai
 import vertexai
 from vertexai.language_models import TextGenerationModel
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 GEMINI_API_KEY = "AIzaSyAFN7Jn5lLXgeXPH0H7jc8CX63QGsMrzoE"
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -257,54 +259,36 @@ class GPTReviewsAnalyzer():
             }
             return result
         logging.info("-----进入chat-------")
-        print("进入chat")
-        # vertexai.init(project="analytics-gbpd-thd", location="us-central1")
-        # parameters = {
-        #     # "candidate_count": 1,
-        #     "max_output_tokens": 1024,
-        #     "temperature": 0.2,
-        #     "top_p": 0.8,
-        #     "top_k": 40
-        # }
-        # model = TextGenerationModel.from_pretrained("text-bison")
-        # response = model.predict(user_prompt,**parameters)
-        # 假设这是你的 Python 代码中的某个部分
 
-# 替换原来的 vertexai 和模型预测代码
-        response = {
-    "Customer Persona": {
-        "description": "The typical customer is a homeowner or DIY enthusiast who values smart lighting solutions for their home. They appreciate features such as adjustable color temperatures, ease of installation, and the ability to control lighting via smartphone apps. These customers tend to be tech-savvy and are looking for products that blend functionality with aesthetic appeal."
-    },
-    "Usage Scenarios": {
-        "Home interior lighting": 20,
-        "Dimming functionalities": 11,
-        "Smart home integration": 8,
-        "Easy installation": 7,
-        "Outdoor lighting": 1
-    },
-    "Positive Aspects (Pros)": {
-        "easy to install": 5,
-        "adjust lighting color": 4,
-        "smart controls (dimming, on/off, different colors)": 3,
-        "works well": 3,
-        "quality product": 2,
-        "quick install": 2,
-        "control each light individually or in a group": 1,
-        "dim the recessed LED permanently": 1,
-        "great illumination": 1,
-        "economical replacement": 1
-    },
-    "Negative Aspects (Cons)": {
-        "connectivity issues (Bluetooth, WiFi)": 4,
-        "poor quality (buzzing, flickering)": 2,
-        "lights go offline": 1,
-        "defective products": 1
-    },
-    "Suggestions for Improvement": {
-        "suggestion": "Improve the Wi-Fi connectivity reliability and Bluetooth performance. Address product quality issues related to dimming and flickering. Additionally, enhance the customer support experience for troubleshooting connection issues."
-    }
-}       
-        print(response)
+        # 服务账户密钥文件路径
+        service_account_file = 'service/service-account-file.json'
+
+        # 定义需要访问的 API 和版本
+        api_name = 'compute'
+        api_version = 'v1'
+
+        # 创建服务账户凭据
+        credentials = service_account.Credentials.from_service_account_file(
+    service_account_file,
+    scopes=['https://www.googleapis.com/auth/cloud-platform']
+)
+
+        # 使用凭据构建 API 客户端
+        service = build(api_name, api_version, credentials=credentials)
+
+
+
+        print("进入chat")
+        vertexai.init(project="analytics-gbpd-thd", location="us-central1")
+        parameters = {
+            # "candidate_count": 1,
+            "max_output_tokens": 1024,
+            "temperature": 0.2,
+            "top_p": 0.8,
+            "top_k": 40
+        }
+        model = TextGenerationModel.from_pretrained("text-bison")
+        response = model.predict(user_prompt,**parameters)
         print(f"Response from Model: {response.text}")
         
         logging.info("-----ret示例-------")

@@ -21,17 +21,17 @@ def generate_chart(productinfo):
     bars = ax1.bar(labels, sizes, color='#ff5722')
     
     # 设置标签和标题
-    ax1.set_xlabel('Rating', fontsize=14, fontweight='bold', color='#ff5722')
+    ax1.set_xlabel('Rating', fontsize=18, fontweight='bold', color='#ff5722')  # 增大x轴标签字体大小
     
     # 添加数据标签
     for bar in bars:
         height = bar.get_height()
         ax1.text(bar.get_x() + bar.get_width() / 2, height, str(height),
-                 ha='center', va='bottom', fontsize=14, weight='bold', color='black')
+                 ha='center', va='bottom', fontsize=16, weight='bold', color='black')  # 增大数据标签字体大小
     
     # 设置坐标轴刻度字体大小和加粗
     for label in ax1.get_xticklabels() + ax1.get_yticklabels():
-        label.set_fontsize(14)
+        label.set_fontsize(18)  # 增大刻度字体大小
         label.set_weight('bold')
         label.set_color('#ff5722')
 
@@ -53,9 +53,10 @@ def generate_charts(productinfo):
         buyer_sizes = [1, 1]
     wedges, texts, autotexts = ax1.pie(buyer_sizes, labels=buyer_labels, autopct='%1.1f%%', startangle=90, colors=['#ff5722', '#9e9e9e'])
     ax1.axis('equal')  # 等轴比例
-    plt.title('Buyer Type Distribution', fontsize=16, fontweight='bold', color='#ff5722')
+    plt.title('Buyer Type Distribution', fontsize=20, fontweight='bold', color='#ff5722')  # 增大标题字体大小
     for text in texts + autotexts:
         text.set_color('#ffffff')
+        text.set_fontsize(20)  # 增大饼图标签和百分比字体大小
     plt.savefig('static/buyer_distribution.png')
     plt.close()
     
@@ -68,9 +69,10 @@ def generate_charts(productinfo):
         age_sizes = [1, 1, 1]
     wedges, texts, autotexts = ax2.pie(age_sizes, labels=age_labels, autopct='%1.1f%%', startangle=90, colors=['#ff5722', '#9e9e9e', '#757575'])
     ax2.axis('equal')  # 等轴比例
-    plt.title('Age Distribution', fontsize=16, fontweight='bold', color='#ff5722')
+    plt.title('Age Distribution', fontsize=20, fontweight='bold', color='#ff5722')  # 增大标题字体大小
     for text in texts + autotexts:
         text.set_color('#ffffff')
+        text.set_fontsize(20)  # 增大饼图标签和百分比字体大小
     plt.savefig('static/age_distribution.png')
     plt.close()
     
@@ -83,15 +85,12 @@ def generate_charts(productinfo):
         recommend_sizes = [1, 1]
     wedges, texts, autotexts = ax3.pie(recommend_sizes, labels=recommend_labels, autopct='%1.1f%%', startangle=90, colors=['#ff5722', '#9e9e9e'])
     ax3.axis('equal')  # 等轴比例
-    plt.title('Recommendation Distribution', fontsize=16, fontweight='bold', color='#ff5722')
+    plt.title('Recommendation Distribution', fontsize=20, fontweight='bold', color='#ff5722')  # 增大标题字体大小
     for text in texts + autotexts:
         text.set_color('#ffffff')
+        text.set_fontsize(20)  # 增大饼图标签和百分比字体大小
     plt.savefig('static/recommend_distribution.png')
     plt.close()
-
-
-
-
 
 productinfo = {
     'TotalResults': 810,
